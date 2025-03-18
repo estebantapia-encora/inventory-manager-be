@@ -13,11 +13,16 @@ public class ProductService {
 
     public ProductService() {
         // Preload some dummy data
-        productList.add(new Product(1L, "Sandwich", "Food", 999.99, LocalDate.of(2025, 4, 30), 10, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(2L, "Mouse", "Electronics", 25.99, null, 5, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(3L, "Notebook", "Clothing", 3.50, null, 20, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(4L, "Keyboard", "Electronics", 49.99, null, 15, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(14L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 30, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(1L, "Sandwich", "Food", 999.99, LocalDate.of(2025, 4, 30), 1, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(2L, "Mouse", "Electronics", 25.99, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(3L, "Socks", "Clothing", 3.50, null, 3, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(4L, "Keyboard", "Electronics", 49.99, null, 4, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(5L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 5, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(6L, "Socks", "Clothing", 3.50, null, 6, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(7L, "Keyboard", "Electronics", 49.99, null, 7, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(8L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 8, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(9L, "Socks", "Clothing", 3.50, null, 9, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(10L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 10, LocalDate.now(), LocalDate.now()));
     }
 
     // Fetch all products with optional filtering and pagination
@@ -71,34 +76,63 @@ public class ProductService {
 
 
     public boolean updateProduct(Long id, Product updatedProduct) {
-        System.out.println("🔄 Received update request for ID: " + id);
-        System.out.println("📥 Incoming product data: " + updatedProduct.toString()); // ✅ Debugging log
+        for (int i = 0; i < productList.size(); i++) {
+            Product p = productList.get(i);
+            if (p.getId().equals(id)) {
+                p.setName(updatedProduct.getName());
+                p.setCategory(updatedProduct.getCategory());
+                p.setUnitPrice(updatedProduct.getUnitPrice());
+                p.setQuantityInStock(updatedProduct.getQuantityInStock());
+                p.setUpdateDate(LocalDate.now());
 
-        Optional<Product> existingProduct = productList.stream()
-                .filter(product -> product.getId().equals(id))
-                .findFirst();
+                // ✅ Ensure expiration date is updated if provided
+                if (updatedProduct.getExpirationDate() != null) {
+                    p.setExpirationDate(updatedProduct.getExpirationDate());
+                    System.out.println("✅ Expiration Date Updated: " + p.getExpirationDate()); // Debug log
+                } else {
+                    System.out.println("⚠️ No Expiration Date Provided, Keeping Old Value.");
+                }
 
-        if (existingProduct.isPresent()) {
-            Product product = existingProduct.get();
-
-            System.out.println("🔄 Before update: " + product.toString());
-
-            // ✅ Ensure field mappings are correct
-            product.setName(updatedProduct.getName());
-            product.setCategory(updatedProduct.getCategory());
-            product.setUnitPrice(updatedProduct.getUnitPrice());
-            product.setExpirationDate(updatedProduct.getExpirationDate());
-            product.setQuantityInStock(updatedProduct.getQuantityInStock());
-            product.setUpdateDate(LocalDate.now());
-
-            System.out.println("✅ After update: " + product.toString());
-
-            return true; // ✅ Product updated
+                productList.set(i, p); // ✅ Save the updated product in memory
+                System.out.println("✅ Product updated: " + p.toString());
+                return true;
+            }
         }
-
-        System.out.println("❌ Product with ID " + id + " not found.");
-        return false; // ❌ Product not found
+        return false;
     }
+
+
+
+    public boolean markProductOutOfStock(Long id) {
+        for (int i = 0; i < productList.size(); i++) {
+            Product p = productList.get(i);
+            if (p.getId().equals(id)) {
+                p.setQuantityInStock(0);
+                p.setUpdateDate(LocalDate.now());
+
+                productList.set(i, p); // ✅ Ensure productList updates correctly
+                System.out.println("✅ Product marked as out of stock: " + p.toString());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean restoreProductStock(Long id) {
+        for (int i = 0; i < productList.size(); i++) {
+            Product p = productList.get(i);
+            if (p.getId().equals(id)) {
+                p.setQuantityInStock(10);
+                p.setUpdateDate(LocalDate.now());
+
+                productList.set(i, p); // ✅ Ensure productList updates correctly
+                System.out.println("✅ Product stock restored: " + p.toString());
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 }

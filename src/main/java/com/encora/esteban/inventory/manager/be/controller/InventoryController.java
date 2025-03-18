@@ -55,5 +55,16 @@ public class InventoryController {
         }
     }
 
+    @PostMapping("/products/{id}/outofstock")
+    public ResponseEntity<Void> markOutOfStock(@PathVariable Long id) {
+        boolean updated = productService.markProductOutOfStock(id);
+        return updated ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/products/{id}/instock")
+    public ResponseEntity<Void> restoreStock(@PathVariable Long id) {
+        boolean updated = productService.restoreProductStock(id);
+        return updated ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+    }
 
 }
