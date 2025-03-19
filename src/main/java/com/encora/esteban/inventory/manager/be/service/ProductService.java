@@ -13,17 +13,27 @@ public class ProductService {
 
     public ProductService() {
         // Preload some dummy data
-        productList.add(new Product(1L, "Sandwich", "Food", 999.99, LocalDate.of(2025, 4, 30), 1, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(2L, "Mouse", "Electronics", 25.99, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(3L, "Socks", "Clothing", 3.50, null, 3, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(4L, "Keyboard", "Electronics", 49.99, null, 4, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(5L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 5, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(6L, "Socks", "Clothing", 3.50, null, 6, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(7L, "Keyboard", "Electronics", 49.99, null, 7, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(8L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 8, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(9L, "Socks", "Clothing", 3.50, null, 9, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(10L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 10, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(11L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 11, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(1L, "Sandwich", "Food", 10, LocalDate.of(2025, 4, 30), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(2L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(3L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(4L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(5L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(6L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(7L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(8L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(9L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(10L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(11L, "Sandwich", "Food", 10, LocalDate.of(2025, 4, 30), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(12L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(13L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(14L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(15L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(16L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(17L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(18L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(19L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(20L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
+
     }
 
     // Fetch all products with optional filtering and pagination
@@ -57,15 +67,49 @@ public class ProductService {
         int totalProducts = filteredProducts.size();
         int totalPages = (int) Math.ceil((double) totalProducts / size);
 
+        // ✅ ADD NEW CATEGORY-BASED TOTALS (FULL INVENTORY, NOT PAGINATED)
+        Map<String, Integer> categoryStock = new HashMap<>();
+        Map<String, Double> categoryValue = new HashMap<>();
+
+        int totalStock = 0; // ✅ Initialize totalStock here
+        double totalValue = 0.0; // ✅ Initialize totalValue here
+
+        for (Product product : productList) { // ✅ Loop through ALL products, not just paginated ones
+            String productCategory = product.getCategory(); // 🔄 Renamed to productCategory
+            int stock = product.getQuantityInStock();
+            double value = product.getUnitPrice() * stock;
+
+            categoryStock.put(productCategory, categoryStock.getOrDefault(productCategory, 0) + stock);
+            categoryValue.put(productCategory, categoryValue.getOrDefault(productCategory, 0.0) + value);
+
+            totalStock += stock;
+            totalValue += value;
+        }
+
+
         int fromIndex = page * size;
         int toIndex = Math.min(fromIndex + size, totalProducts);
         List<Product> paginatedProducts = (fromIndex >= totalProducts) ? new ArrayList<>() : filteredProducts.subList(fromIndex, toIndex);
+
+        // ✅ Debugging Statements (Print Values to Check)
+        System.out.println("DEBUG: Total Products = " + totalProducts);
+        System.out.println("DEBUG: Total Pages = " + totalPages);
+        System.out.println("DEBUG: Total Stock = " + totalStock);
+        System.out.println("DEBUG: Total Value = " + totalValue);
+        System.out.println("DEBUG: Paginated Products Count = " + paginatedProducts.size());
+        System.out.println("DEBUG: Category Stock Map = " + categoryStock);
+        System.out.println("DEBUG: Category Value Map = " + categoryValue);
+
 
         // ✅ Return sorted, paginated results
         Map<String, Object> response = new HashMap<>();
         response.put("products", paginatedProducts);
         response.put("totalProducts", totalProducts);
         response.put("totalPages", totalPages);
+        response.put("totalStock", Math.max(totalStock, 0)); // ✅ Use FULL inventory totalStock
+        response.put("totalValue", Math.max(totalValue, 0)); // ✅ Use FULL inventory totalValue
+        response.put("categoryStock", categoryStock); // ✅ Add full category stock
+        response.put("categoryValue", categoryValue); // ✅ Add full category value
         response.put("currentPage", page);
 
         return response;
