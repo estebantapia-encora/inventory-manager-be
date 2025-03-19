@@ -120,8 +120,6 @@ public class ProductService {
         return false;
     }
 
-
-
     public boolean markProductOutOfStock(Long id) {
         for (int i = 0; i < productList.size(); i++) {
             Product p = productList.get(i);
