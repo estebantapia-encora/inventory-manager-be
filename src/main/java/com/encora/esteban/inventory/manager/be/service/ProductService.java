@@ -23,27 +23,45 @@ public class ProductService {
         productList.add(new Product(8L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 8, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(9L, "Socks", "Clothing", 3.50, null, 9, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(10L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 10, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(11L, "Bread", "Food", 5.99, LocalDate.of(2025, 8, 20), 11, LocalDate.now(), LocalDate.now()));
     }
 
     // Fetch all products with optional filtering and pagination
-    public Map<String, Object> getProducts(String name, String category, Boolean inStock, int page, int size) {
+    public Map<String, Object> getProducts(String name, String category, Boolean inStock, int page, int size, String sortBy, String sortOrder) {
         List<Product> filteredProducts = productList.stream()
                 .filter(product -> (name == null || product.getName().toLowerCase().contains(name.toLowerCase())))
                 .filter(product -> (category == null || product.getCategory().equalsIgnoreCase(category)))
                 .filter(product -> (inStock == null || (inStock ? product.getQuantityInStock() > 0 : product.getQuantityInStock() == 0)))
                 .collect(Collectors.toList());
 
-        // Get the total number of products after filtering
+        // ✅ Apply Sorting BEFORE Pagination
+        Comparator<Product> comparator = Comparator.comparing(Product::getName); // Default sorting by name
+
+        if ("category".equals(sortBy)) {
+            comparator = Comparator.comparing(Product::getCategory);
+        } else if ("price".equals(sortBy)) {
+            comparator = Comparator.comparingDouble(Product::getUnitPrice);
+        } else if ("stock".equals(sortBy)) {
+            comparator = Comparator.comparingInt(Product::getQuantityInStock);
+        } else if ("expiration".equals(sortBy)) {
+            comparator = Comparator.comparing(Product::getExpirationDate, Comparator.nullsLast(Comparator.naturalOrder())); // Handle null dates
+        }
+
+        if ("desc".equals(sortOrder)) {
+            comparator = comparator.reversed();
+        }
+
+        filteredProducts.sort(comparator); // ✅ Sorting applied before pagination
+
+        // ✅ Apply Pagination AFTER Sorting
         int totalProducts = filteredProducts.size();
         int totalPages = (int) Math.ceil((double) totalProducts / size);
 
-        // Apply pagination
         int fromIndex = page * size;
         int toIndex = Math.min(fromIndex + size, totalProducts);
+        List<Product> paginatedProducts = (fromIndex >= totalProducts) ? new ArrayList<>() : filteredProducts.subList(fromIndex, toIndex);
 
-        List<Product> paginatedProducts = fromIndex >= totalProducts ? new ArrayList<>() : filteredProducts.subList(fromIndex, toIndex);
-
-        // Create a response map
+        // ✅ Return sorted, paginated results
         Map<String, Object> response = new HashMap<>();
         response.put("products", paginatedProducts);
         response.put("totalProducts", totalProducts);
@@ -52,6 +70,7 @@ public class ProductService {
 
         return response;
     }
+
 
     // Add this method inside `ProductService`
     public boolean deleteProductById(Long id) {

@@ -25,9 +25,14 @@ public class InventoryController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) Boolean inStock,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return productService.getProducts(name, category, inStock, page, size);
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy, // ✅ Accept sortBy
+            @RequestParam(defaultValue = "asc") String sortOrder // ✅ Accept sortOrder
+    ) {
+        return productService.getProducts(name, category, inStock, page, size, sortBy, sortOrder);
     }
+
+
 
     // ✅ ADD THIS DELETE MAPPING
     @DeleteMapping("/products/{id}")
