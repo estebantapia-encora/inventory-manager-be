@@ -17,21 +17,7 @@ public class ProductService {
         productList.add(new Product(2L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(3L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(4L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(5L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(6L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(7L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(8L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(9L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(10L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(11L, "Sandwich", "Food", 10, LocalDate.of(2025, 4, 30), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(12L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(13L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(14L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(15L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(16L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(17L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(18L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
- }
+}
 
     // Fetch all products with optional filtering and pagination
     public Map<String, Object> getProducts(String name, String category, Boolean inStock, int page, int size, String sortBy, String sortOrder) {
