@@ -11,11 +11,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Product {
     private Long id;
+
     private String name;
+
     private String category;
+
     private double unitPrice;
+
     private LocalDate expirationDate;
+
     private int quantityInStock;
+
     private LocalDate creationDate;
+
     private LocalDate updateDate;
 }

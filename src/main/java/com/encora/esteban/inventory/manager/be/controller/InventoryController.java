@@ -60,6 +60,33 @@ public class InventoryController {
         }
     }
 
+
+
+    @PostMapping("/products")
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+        System.out.println("Received Product: " + product); // Log received product
+
+        if (product.getName().length() > 120) {
+            return ResponseEntity.badRequest().body(null); // Name too long
+        }
+        if (product.getUnitPrice() <= 0) {
+            return ResponseEntity.badRequest().body(null); // Price must be positive
+        }
+
+        if (product.getQuantityInStock() < 0) {
+            return ResponseEntity.badRequest().body(null); // Stock cannot be negative
+        }
+        if ("Food".equalsIgnoreCase(product.getCategory()) && product.getExpirationDate() == null) {
+            return ResponseEntity.badRequest().build(); // Return error if food product doesn't have an expiration date
+        }
+
+        Product savedProduct = productService.addProduct(product);
+        System.out.println("Saved Product: " + savedProduct);
+        return ResponseEntity.ok(savedProduct);
+    }
+
+
+
     @PostMapping("/products/{id}/outofstock")
     public ResponseEntity<Void> markOutOfStock(@PathVariable Long id) {
         boolean updated = productService.markProductOutOfStock(id);

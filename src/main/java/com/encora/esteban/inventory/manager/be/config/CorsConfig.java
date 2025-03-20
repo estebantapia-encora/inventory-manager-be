@@ -6,7 +6,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 @Configuration
 public class CorsConfig {
@@ -14,12 +14,13 @@ public class CorsConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:8080")); // Allow frontend
-        config.setAllowedMethods(Collections.singletonList("*")); // Allow all HTTP methods (GET, POST, PUT, DELETE)
-        config.setAllowedHeaders(Collections.singletonList("*")); // Allow all headers
+        config.setAllowedOrigins(Arrays.asList("http://localhost:8080")); // ✅ Allow frontend on port 8080
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE")); // ✅ Allow necessary HTTP methods
+        config.setAllowedHeaders(Arrays.asList("*")); // ✅ Allow all headers
+        config.setAllowCredentials(true); // ✅ Allow credentials (if needed)
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config); // Apply to all endpoints
+        source.registerCorsConfiguration("/**", config); // ✅ Apply to all endpoints
         return new CorsFilter(source);
     }
 }

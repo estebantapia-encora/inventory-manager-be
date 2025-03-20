@@ -31,10 +31,7 @@ public class ProductService {
         productList.add(new Product(16L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(17L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(18L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(19L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(20L, "Bread", "Food", 10, LocalDate.of(2025, 8, 20), 2, LocalDate.now(), LocalDate.now()));
-
-    }
+ }
 
     // Fetch all products with optional filtering and pagination
     public Map<String, Object> getProducts(String name, String category, Boolean inStock, int page, int size, String sortBy, String sortOrder) {
@@ -114,6 +111,16 @@ public class ProductService {
 
         return response;
     }
+
+    public Product addProduct(Product product) {
+        System.out.println("Received Product: " + product.toString()); // Debugging line
+        product.setId((long) (productList.size() + 1));
+        product.setCreationDate(LocalDate.now());
+        product.setUpdateDate(LocalDate.now());
+        productList.add(product);
+        return product;
+    }
+
 
 
     // Add this method inside `ProductService`
