@@ -68,7 +68,7 @@ The backend will run at http://localhost:9090/.
 ## Running Tests - To run unit tests for the backend
  - mvn test
 
-## Deplyment - To build and deploy the backend, run:
+## Deployment - To build and deploy the backend, run:
  - mvn package
 
  ## License
