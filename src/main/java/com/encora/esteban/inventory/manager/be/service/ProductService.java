@@ -17,6 +17,10 @@ public class ProductService {
         productList.add(new Product(2L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(3L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
         productList.add(new Product(4L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(5L, "Sandwich", "Food", 10, LocalDate.of(2025, 4, 30), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(6L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(7L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(8L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
 }
 
     // Fetch all products with optional filtering and pagination
@@ -104,6 +108,11 @@ public class ProductService {
         product.setCreationDate(LocalDate.now());
         product.setUpdateDate(LocalDate.now());
         productList.add(product);
+
+        System.out.println("✅ Product Created: " + product.getName());
+        System.out.println("🕒 Creation Date: " + product.getCreationDate());
+        System.out.println("🕒 Update Date: " + product.getUpdateDate());
+
         return product;
     }
 
@@ -151,6 +160,7 @@ public class ProductService {
 
                 productList.set(i, p); // ✅ Save the updated product in memory
                 System.out.println("✅ Product updated: " + p.toString());
+                System.out.println("🕒 New Update Date: " + p.getUpdateDate());
                 return true;
             }
         }

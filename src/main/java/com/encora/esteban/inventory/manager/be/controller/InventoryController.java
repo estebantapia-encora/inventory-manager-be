@@ -54,6 +54,9 @@ public class InventoryController {
         boolean updated = productService.updateProduct(id, updatedProduct);
 
         if (updated) {
+            System.out.println("✅ Product Updated: " + updatedProduct.getName());
+            System.out.println("🕒 New Update Date: " + updatedProduct.getUpdateDate());
+
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build(); // 404 if product doesn't exist
@@ -82,6 +85,8 @@ public class InventoryController {
 
         Product savedProduct = productService.addProduct(product);
         System.out.println("Saved Product: " + savedProduct);
+        System.out.println("🕒 Creation Date: " + savedProduct.getCreationDate());
+        System.out.println("🕒 Update Date: " + savedProduct.getUpdateDate());
         return ResponseEntity.ok(savedProduct);
     }
 
