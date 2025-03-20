@@ -2,13 +2,13 @@
 
 An Inventory Management System built with Java & Spring Boot.
 ## Table of Contents
-- Features
-- Tech Stack
-- Installation & Setup
-- API Endpoints
-- Running Tests
-- Deployment
-- License
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation & Setup](#installation--setup)
+- [API Endpoints](#api-endpoints)
+- [Running Tests](#running-tests)
+- [Deployment](#deployment)
+- [License](#license)
 
 
 ## Features
@@ -40,7 +40,7 @@ An Inventory Management System built with Java & Spring Boot.
 - **CORS Configuration:** Custom CorsConfig Class.
 - **Frontend:** https://github.com/estebantapia-encora/inventory-manager-fe
 
-## Installation
+## Installation & Setup
 ### **1. Clone the Repository**
 - git clone https://github.com/estebantapia-encora/inventory-manager-be.git
 - cd inventory-manager-be
