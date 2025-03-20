@@ -65,11 +65,11 @@ The backend will run at http://localhost:9090/.
 | **POST** | `/products/{id}/outofstock`    | Mark a product as "out of stock" |
 
 
-## Running Tests - To run unit tests for the backend
- - mvn test
+## Running Tests
+- To run unit tests for the backend, run: mvn test
 
-## Deployment - To build and deploy the backend, run:
- - mvn package
+## Deployment
+- To build and deploy the backend, run: mvn package
 
  ## License
 This project is licensed under the MIT License.
