@@ -26,15 +26,13 @@ public class InventoryController {
             @RequestParam(required = false) Boolean inStock,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "name") String sortBy, // ✅ Accept sortBy
-            @RequestParam(defaultValue = "asc") String sortOrder // ✅ Accept sortOrder
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder
     ) {
         return productService.getProducts(name, category, inStock, page, size, sortBy, sortOrder);
     }
 
 
-
-    // ✅ ADD THIS DELETE MAPPING
     @DeleteMapping("/products/{id}")
 
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
@@ -46,7 +44,7 @@ public class InventoryController {
         }
     }
 
-    // ✅ ADD THIS EDIT MAPPING
+
     @PutMapping("/products/{id}")
     public ResponseEntity<Void> updateProduct(
             @PathVariable Long id,
@@ -54,8 +52,8 @@ public class InventoryController {
         boolean updated = productService.updateProduct(id, updatedProduct);
 
         if (updated) {
-            System.out.println("✅ Product Updated: " + updatedProduct.getName());
-            System.out.println("🕒 New Update Date: " + updatedProduct.getUpdateDate());
+            System.out.println("Product Updated: " + updatedProduct.getName());
+            System.out.println("New Update Date: " + updatedProduct.getUpdateDate());
 
             return ResponseEntity.ok().build();
         } else {

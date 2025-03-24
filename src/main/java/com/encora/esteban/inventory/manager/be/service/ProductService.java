@@ -13,15 +13,18 @@ public class ProductService {
 
     public ProductService() {
         // Preload some dummy data
-        productList.add(new Product(1L, "Sandwich", "Food", 10, LocalDate.of(2025, 4, 30), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(2L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(3L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(4L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(5L, "Sandwich", "Food", 10, LocalDate.of(2025, 4, 30), 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(6L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(7L, "Socks", "Clothing", 10, null, 2, LocalDate.now(), LocalDate.now()));
-        productList.add(new Product(8L, "Keyboard", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
-}
+        productList.add(new Product(1L, "Mouse", "Electronics", 10, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(2L, "Pants", "Clothing", 11, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(3L, "Keyboard", "Electronics", 12, null, 4, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(4L, "Speaker", "Electronics", 12, null, 6, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(5L, "PC", "Electronics", 14, null, 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(6L, "Socks", "Clothing", 12, null, 4, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(7L, "Lamp", "Electronics", 10, null, 0, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(8L, "Cake", "Food", 30, LocalDate.of(2025, 4, 10), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(9L, "Pasta", "Food", 20, LocalDate.of(2025, 4, 9), 2, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(10L, "Tacos", "Food", 300, LocalDate.of(2025, 5, 7), 4, LocalDate.now(), LocalDate.now()));
+        productList.add(new Product(11L, "Hat", "Clothing", 14, null, 6, LocalDate.now(), LocalDate.now()));
+    }
 
     // Fetch all products with optional filtering and pagination
     public Map<String, Object> getProducts(String name, String category, Boolean inStock, int page, int size, String sortBy, String sortOrder) {
